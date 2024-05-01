@@ -94,13 +94,13 @@ HRESULT WINAPI detourDirectPlayLobbyCreateA(LPGUID guid, LPDIRECTPLAYLOBBYA* lob
                     if (pConnectionSettings->dwFlags == 1 && pConnectionSettings->guidSP == DP4_IPX_SP)
                     {
                         //Get directplay object
-                        LPDIRECTPLAY* lobby = (LPDIRECTPLAY*)malloc(sizeof(LPDIRECTPLAY));
+                        LPDIRECTPLAY* directPlay = (LPDIRECTPLAY*)malloc(sizeof(LPDIRECTPLAY));
 
-                        HRESULT result = DirectPlayCreate(&DP4_IPX_SP, lobby, NULL);
+                        HRESULT result = DirectPlayCreate(&DP4_IPX_SP, directPlay, NULL);
 
                         if (SUCCEEDED(result)) {
                             //Get interface
-                            result = (*lobby)->QueryInterface(IID_IDirectPlay4AGuid, (LPVOID*)&lpDP);
+                            result = (*directPlay)->QueryInterface(IID_IDirectPlay4AGuid, (LPVOID*)&lpDP);
 
                             if (SUCCEEDED(result)) 
                             {
@@ -119,8 +119,8 @@ HRESULT WINAPI detourDirectPlayLobbyCreateA(LPGUID guid, LPDIRECTPLAYLOBBYA* lob
                                 lpDP = NULL;
                             }
 
-                            (*lobby)->Release();
-                            free(lobby);
+                            (*directPlay)->Release();
+                            free(directPlay);
                         }
                     }
 
